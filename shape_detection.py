@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 global img
 # Change this variable to the desired image to scan, for example to scan image.png, just replace the stuff inside the quotes
-img = cv2.imread('image.png')
+img = cv2.imread('test_cube.jpg')
 
 
 def example_contours():

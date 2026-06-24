@@ -49,4 +49,6 @@ def process_image_colors(image_path, output_path="color_result.png"):
 
 
 if process_image_colors("/content/sample_data/test_image.png", "result.png"):
-  display(Image.open("result.png"))
+  Image.open("result.png")
+
+process_image_colors("test_cube.jpg")
