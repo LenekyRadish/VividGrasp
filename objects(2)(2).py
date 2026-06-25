@@ -116,7 +116,7 @@ tennis_ball = create_sports_ball(
 baseball = create_sports_ball(
     0.0365, 0.145, 0.5, 0.005,
     position=random_safe_position(0.0365),
-    texture_path=r"c:\SB VexPushback\EZ-Template-Example-Project (1)\.vscode\baseball.jpg")
+    texture_path="baseball.jpg")
 
 ping_pong = create_sports_ball(
     0.02, 0.0027, 0.2, 0.001,
