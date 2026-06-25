@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot name="brown_plane">
+
+  <link name="ground">
+
+    <!-- Visual appearance -->
+    <visual>
+      <origin xyz="0 0 -0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="1000 1000 0.1"/>
+      </geometry>
+      <material name="brown">
+        <color rgba="0.55 0.27 0.07 1.0"/>
+      </material>
+    </visual>
+
+    <!-- Collision geometry -->
+    <collision>
+      <origin xyz="0 0 -0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="1000 1000 0.1"/>
+      </geometry>
+    </collision>
+
+    <!-- Static inertial properties -->
+    <inertial>
+      <origin xyz="0 0 -0.05" rpy="0 0 0"/>
+      <mass value="1e9"/>
+      <inertia
+        ixx="1e9" ixy="0" ixz="0"
+        iyy="1e9" iyz="0"
+        izz="1e9"/>
+    </inertial>
+
+  </link>
+
+</robot>
