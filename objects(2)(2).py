@@ -93,7 +93,6 @@ def random_safe_position(radius, min_from_origin=0.25, area=0.5):
         # makes it a little bit further from the origin
         if math.hypot(x, y) < min_from_origin:
             continue  
-
         not_overlapping = True
         for (px, py, pr) in placed:
             dist = math.hypot(x - px, y - py)
