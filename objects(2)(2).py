@@ -111,7 +111,7 @@ for _ in range(100):
 tennis_ball = create_sports_ball(
     0.0327, 0.058, 0.6, 0.01,
     position=random_safe_position(0.0327),
-    texture_path=r"c:\SB VexPushback\EZ-Template-Example-Project (1)\.vscode\tennis_ball.jpg")
+    texture_path="tennis.jpg")
 
 baseball = create_sports_ball(
     0.0365, 0.145, 0.5, 0.005,
