@@ -18,7 +18,7 @@ p.changeDynamics(plane, -1, contactStiffness=1e6, contactDamping=1e3)
 
 for _ in range(100):
     p.stepSimulation()
-    time.sleep(1./240.)    
+  
 
 # make the uv spheres for the texture to wrap around on
 def make_uv_sphere_obj(filename, stacks=32, slices=32):
