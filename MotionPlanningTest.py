@@ -36,7 +36,7 @@ print(f"IK solution — yaw: {goal_angles[0]:.2f}, shoulder: {goal_angles[1]:.2f
 start_angles = np.array([0.0, 0.0, 0.0]) #obviously wanna start at 0
 steps = 480 # ideal number for best rendering in pybullet
 
-#this is sinusoidal "blend" motion planning straight from the day 8 notebook
+#sinusoidal "blend" motion planning
 def sinusoidal_interpolation(start, goal, steps):
     t = np.linspace(0, np.pi, steps)
     alpha = (1 - np.cos(t)) / 2  
