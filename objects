@@ -1,0 +1,108 @@
+import pybullet as p
+import pybullet_data
+import numpy as np
+import random
+import os
+import time
+
+# load the plane
+p.connect(p.GUI)
+p.setAdditionalSearchPath(pybullet_data.getDataPath())
+p.setGravity(0, 0, -9.81)
+p.loadURDF("plane.urdf")
+
+# make the uv spheres for the texture to wrap around on
+def make_uv_sphere_obj(filename, stacks=32, slices=32):
+    verts, uvs, faces = [], [], []
+    for i in range(stacks + 1):
+        v = i / stacks
+        theta = v * np.pi
+        for j in range(slices + 1):
+            u = j / slices
+            phi = u * 2 * np.pi
+            verts.append((np.sin(theta)*np.cos(phi), np.sin(theta)*np.sin(phi), np.cos(theta)))
+            uvs.append((u, 1 - v))
+    for i in range(stacks):
+        for j in range(slices):
+            a = i * (slices + 1) + j + 1
+            b = a + slices + 1
+            faces.append((a, a + 1, b + 1, b))
+    with open(filename, "w") as f:
+        for x, y, z in verts: f.write(f"v {x} {y} {z}\n")
+        for u, w in uvs:      f.write(f"vt {u} {w}\n")
+        for a, b, c, d in faces:
+            f.write(f"f {a}/{a} {b}/{b} {c}/{c} {d}/{d}\n")
+
+SPHERE_OBJ = os.path.join(os.getcwd(), "uv_sphere.obj")
+make_uv_sphere_obj(SPHERE_OBJ)
+
+# makes the balls
+def create_sports_ball(radius, mass, lateral_friction, rolling_friction,
+                       color=None, texture_path=None, position=[0, 0, 0]):
+    collision_shape = p.createCollisionShape(p.GEOM_SPHERE, radius=radius)
+    if texture_path:
+        visual_shape = p.createVisualShape(shapeType=p.GEOM_MESH, fileName=SPHERE_OBJ,
+                                           meshScale=[radius]*3, rgbaColor=[1, 1, 1, 1])
+    else:
+        if color is None: color = [1, 1, 1, 1]
+        visual_shape = p.createVisualShape(shapeType=p.GEOM_SPHERE, radius=radius, rgbaColor=color)
+    ball_id = p.createMultiBody(baseMass=mass, baseCollisionShapeIndex=collision_shape,
+                                baseVisualShapeIndex=visual_shape, basePosition=position)
+    p.changeDynamics(ball_id, -1, lateralFriction=lateral_friction,
+                     rollingFriction=rolling_friction, restitution=0.75)
+    if texture_path:
+        tex = p.loadTexture(texture_path)
+        p.changeVisualShape(ball_id, -1, textureUniqueId=tex)
+    return ball_id
+
+# load in the trays
+tray_scale = 0.3   # makes trays smaller than default
+tray1 = p.loadURDF("tray/traybox.urdf", basePosition=[1,  0.0, 0], globalScaling=tray_scale)
+tray2 = p.loadURDF("tray/traybox.urdf", basePosition=[1,  0.5, 0], globalScaling=tray_scale)
+tray3 = p.loadURDF("tray/traybox.urdf", basePosition=[1, -0.5, 0], globalScaling=tray_scale)
+import math
+
+placed = []  
+
+def random_safe_position(radius, min_from_origin=0.15, area=0.5):
+    while True:
+        x = random.uniform(-area, area)
+        y = random.uniform(-area, area)
+
+        # makes it a little bit further from the origin
+        if math.hypot(x, y) < min_from_origin:
+            continue  
+
+      
+        ok = True
+        for (px, py, pr) in placed:
+            dist = math.hypot(x - px, y - py)
+            if dist < (radius + pr):  # prevents overlap
+                ok = False
+                break
+        if not ok:
+            continue 
+
+        placed.append((x, y, radius))
+        return [x, y, radius]  
+    
+# create the specific balls
+tennis_ball = create_sports_ball(
+    radius=0.0327, mass=0.058, lateral_friction=0.6, rolling_friction=0.01,
+    position=random_safe_position(0.0327),
+    texture_path=r"c:\SB VexPushback\EZ-Template-Example-Project (1)\.vscode\Screenshot 2026-06-24 201507.jpg")
+
+baseball = create_sports_ball(
+    radius=0.0365, mass=0.145, lateral_friction=0.5, rolling_friction=0.005,
+    position=random_safe_position(0.0365),
+    texture_path=r"c:\SB VexPushback\EZ-Template-Example-Project (1)\.vscode\Screenshot 2026-06-24 220302.jpg")
+
+ping_pong = create_sports_ball(
+    radius=0.02, mass=0.0027, lateral_friction=0.2, rolling_friction=0.001,
+    position=random_safe_position(0.02),
+    color=[0.9, 0.55, 0.1, 1])
+
+
+while True:
+    p.stepSimulation()
+    time.sleep(1./240.)
