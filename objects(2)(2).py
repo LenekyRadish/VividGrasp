@@ -16,9 +16,9 @@ plane = p.loadURDF("plane.urdf")
 p.changeVisualShape(plane, -1, rgbaColor=[0.55, 0.35, 0.2, 1])   # brown floor
 p.changeDynamics(plane, -1, contactStiffness=1e6, contactDamping=1e3)
 
-for _ in range(100):
+for _ in range(480):
     p.stepSimulation()
-  
+    time.sleep(1/240)    
 
 # make the uv spheres for the texture to wrap around on
 def make_uv_sphere_obj(filename, stacks=32, slices=32):
@@ -94,15 +94,14 @@ def random_safe_position(radius, min_from_origin=0.25, area=0.5):
         if math.hypot(x, y) < min_from_origin:
             continue  
 
-      
-        ok = True
+        not_overlapping = True
         for (px, py, pr) in placed:
             dist = math.hypot(x - px, y - py)
             if dist < (radius + pr):  # prevents overlap
-                ok = False
+                not_overlapping = False
                 break
-        if not ok:
-            continue 
+        if not not_overlapping:
+            continue
 
         placed.append((x, y, radius))
 
@@ -110,18 +109,18 @@ def random_safe_position(radius, min_from_origin=0.25, area=0.5):
     
 for _ in range(100):
     p.stepSimulation()
-    time.sleep(1./240.)    
+    time.sleep(1/120)    
     
 # create the specific balls
 tennis_ball = create_sports_ball(
     0.0327, 0.058, 0.6, 0.01,
     position=random_safe_position(0.0327),
-    texture_path=r"c:\SB VexPushback\EZ-Template-Example-Project (1)\.vscode\Screenshot 2026-06-24 201507.jpg")
+    texture_path=r"c:\SB VexPushback\EZ-Template-Example-Project (1)\.vscode\tennis_ball.jpg")
 
 baseball = create_sports_ball(
     0.0365, 0.145, 0.5, 0.005,
     position=random_safe_position(0.0365),
-    texture_path=r"c:\SB VexPushback\EZ-Template-Example-Project (1)\.vscode\Screenshot 2026-06-24 220302.jpg")
+    texture_path=r"c:\SB VexPushback\EZ-Template-Example-Project (1)\.vscode\baseball.jpg")
 
 ping_pong = create_sports_ball(
     0.02, 0.0027, 0.2, 0.001,
@@ -130,4 +129,4 @@ ping_pong = create_sports_ball(
 
 while p.isConnected():
     p.stepSimulation()
-    time.sleep(1./240.)
+    time.sleep(1/240)
