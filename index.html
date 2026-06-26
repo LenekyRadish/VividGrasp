@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Run the VividGrasp AI4ALL robotics vision, sorting, and motion-planning showcase online."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23172026'/%3E%3Cpath d='M17 18h9l6 19 6-19h9L36 46h-8L17 18z' fill='%23ffffff'/%3E%3C/svg%3E"
+    />
+    <title>VividGrasp AI4ALL Showcase</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">VG</span>
+          <div>
+            <p>Stanford AI4ALL Robotics</p>
+            <h1>VividGrasp</h1>
+          </div>
+        </div>
+        <div class="actions" aria-label="Simulation controls">
+          <button class="primary" id="runButton" type="button">Run Showcase</button>
+          <button id="resetButton" type="button">Reset Scene</button>
+          <label class="speed-control" for="speedRange">
+            <span>Speed</span>
+            <input id="speedRange" type="range" min="0.5" max="2.5" value="1" step="0.25" />
+            <output id="speedValue" for="speedRange">1.00x</output>
+          </label>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="panel camera-panel" aria-labelledby="cameraTitle">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Vision pipeline</p>
+              <h2 id="cameraTitle">Camera And HSV Detection</h2>
+            </div>
+            <output id="detectionCount">0 objects</output>
+          </div>
+          <div class="canvas-frame square">
+            <canvas
+              id="cameraCanvas"
+              width="600"
+              height="600"
+              aria-label="Synthetic overhead camera feed with detected objects"
+            ></canvas>
+          </div>
+        </section>
+
+        <section class="panel world-panel" aria-labelledby="worldTitle">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Robot workspace</p>
+              <h2 id="worldTitle">Coordinate Mapping And Arm Path</h2>
+            </div>
+            <output id="runStatus">Ready</output>
+          </div>
+          <div class="canvas-frame wide">
+            <canvas
+              id="worldCanvas"
+              width="760"
+              height="520"
+              aria-label="Top-down robot arm workspace and sorting trays"
+            ></canvas>
+          </div>
+        </section>
+
+        <section class="panel mask-panel" aria-labelledby="maskTitle">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">OpenCV-style masks</p>
+              <h2 id="maskTitle">HSV Mask Preview</h2>
+            </div>
+            <output id="maskStatus">Synced</output>
+          </div>
+          <div class="canvas-frame mask">
+            <canvas
+              id="maskCanvas"
+              width="600"
+              height="190"
+              aria-label="HSV mask preview for tennis, baseball, and ping-pong objects"
+            ></canvas>
+          </div>
+        </section>
+
+        <section class="panel data-panel" aria-labelledby="dataTitle">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Classifier output</p>
+              <h2 id="dataTitle">Detected Objects</h2>
+            </div>
+            <output id="sortCount">0 sorted</output>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Object</th>
+                  <th>Pixel</th>
+                  <th>World XYZ</th>
+                  <th>Bin</th>
+                </tr>
+              </thead>
+              <tbody id="detectionRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel timeline-panel" aria-labelledby="timelineTitle">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Run log</p>
+              <h2 id="timelineTitle">Showcase Timeline</h2>
+            </div>
+            <output id="stepStatus">Idle</output>
+          </div>
+          <ol id="eventLog" class="event-log"></ol>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

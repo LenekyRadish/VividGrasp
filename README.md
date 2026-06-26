@@ -4,6 +4,31 @@ VividGrasp is a simple robot which detects objects by color, and then sorts them
 of the Stanford AI4ALL program, a summer program which encourages those who have interests in AI, but may not have representation in the politics of AI today,
 to explore their interests and collaborate with their peers.
 
+## Online Showcase
+
+The repository now includes a browser-hosted VividGrasp showcase that can run on Vercel. It mirrors the original Python pipeline in a web-friendly form:
+
+- synthetic overhead camera scene
+- HSV mask detection for tennis, baseball, and ping-pong balls
+- pixel-to-world coordinate conversion
+- bin classification
+- animated two-axis arm pickup and sorting path
+
+Run it locally:
+
+```bash
+npm install
+npm run dev
+```
+
+Build it for deployment:
+
+```bash
+npm run build
+```
+
+The production Vercel project is intended to use the project name `vividgrasp-ai4all`, which gives the public URL `https://vividgrasp-ai4all.vercel.app/`.
+
 
 ## Acknowlegements and Contributions
 A ton of people worked very hard to make this project happen, and they are credited as such below.
