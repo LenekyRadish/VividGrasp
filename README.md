@@ -6,7 +6,7 @@ to explore their interests and collaborate with their peers.
 
 ## Online PyBullet Showcase
 
-The repository now includes a minimal browser-hosted PyBullet viewer for Vercel. The site plays a PyBullet render generated from the checked-in two-axis arm URDF, so visitors can click **Run PyBullet** and watch the showcase online.
+The repository now includes a minimal browser-hosted PyBullet viewer for Vercel. The site plays a PyBullet render of the three-ball bucket scene, so visitors can click **Run PyBullet** and watch the most important showcase online.
 
 Run it locally:
 
