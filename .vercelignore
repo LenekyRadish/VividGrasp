@@ -1,0 +1,7 @@
+node_modules
+dist
+2AxisArm/CadFiles
+2AxisArm/__pycache__
+*.SLDASM
+*.SLDPRT
+*.pyc

@@ -1,0 +1,7 @@
+node_modules
+dist
+.vercel
+.playwright-cli
+__pycache__
+*.log
+.DS_Store
